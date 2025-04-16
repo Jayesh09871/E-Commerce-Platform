@@ -15,32 +15,33 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // TODO: Initialize Google OAuth client
-    // This will be implemented when backend provides OAuth configuration
-    setLoading(false);
+    const checkAuthStatus = async () => {
+      try {
+        const res = await fetch('http://localhost:5000/api/auth/current-user', {
+          credentials: 'include'
+        });
+        const data = await res.json();
+        
+        if (res.ok && !data.message) {
+          setUser(data);
+        }
+      } catch (error) {
+        console.error('Auth check error:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    checkAuthStatus();
   }, []);
 
-  const signIn = async () => {
-    try {
-      // TODO: Implement Google OAuth sign-in
-      // For now, using mock data
-      const mockUser = {
-        id: '1',
-        email: 'user@example.com',
-        name: 'Test User',
-        picture: 'https://placehold.co/100x100'
-      };
-      setUser(mockUser);
-      return mockUser;
-    } catch (error) {
-      console.error('Sign in error:', error);
-      throw error;
-    }
-  };
+  
 
   const signOut = async () => {
     try {
-      // TODO: Implement Google OAuth sign-out
+      await fetch('http://localhost:5000/api/auth/logout', {
+        credentials: 'include'
+      });
       setUser(null);
     } catch (error) {
       console.error('Sign out error:', error);
@@ -53,7 +54,7 @@ export const AuthProvider = ({ children }) => {
       value={{
         user,
         loading,
-        signIn,
+        
         signOut,
         isAuthenticated: !!user
       }}

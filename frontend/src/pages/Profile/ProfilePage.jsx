@@ -1,9 +1,16 @@
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 
 const ProfilePage = () => {
-  const { user, signOut } = useAuth();
+  const { user, signOut, loading } = useAuth();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user && !loading) {
+      navigate('/login');
+    }
+  }, [user, loading, navigate]);
 
   // Mock order data - will be replaced with API call
   const orders = [
@@ -46,10 +53,11 @@ const ProfilePage = () => {
     }
   };
 
-  if (!user) {
-    navigate('/login');
-    return null;
-  }
+  useEffect(() => {
+    if (!user && !loading) {
+      navigate('/login');
+    }
+  }, [user, loading, navigate]);
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
