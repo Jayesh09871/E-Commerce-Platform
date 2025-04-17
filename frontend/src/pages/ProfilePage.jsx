@@ -413,18 +413,23 @@ const ProfilePage = () => {
                   </div>
 
                   <div className="mt-8">
-                    <button
-                      type="submit"
-                      className="bg-primary-600 text-gray-800 px-6 py-2 rounded-md hover:bg-primary-700 transition-colors duration-300 flex items-center"
-                      disabled={profileUpdating}
-                    >
-                      {profileUpdating ? (
-                        <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-white mr-2"></div>
-                      ) : (
-                        <FaEdit className="mr-2" />
-                      )}
-                      Update Profile
-                    </button>
+             <button
+  type="submit"
+  className={`px-6 py-2 rounded-md transition-colors duration-300 flex items-center
+    ${profileUpdating
+      ? 'bg-gray-400 text-white cursor-not-allowed'
+     : 'bg-emerald-500 text-white hover:bg-emerald-600 hover:cursor-pointer'}
+  `}
+  disabled={profileUpdating}
+>
+  {profileUpdating ? (
+    <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-white mr-2"></div>
+  ) : (
+    <FaEdit className="mr-2" />
+  )}
+  Update Profile
+</button>
+
                   </div>
                 </form>
               </>

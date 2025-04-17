@@ -253,7 +253,7 @@ const ProductDetailPage = () => {
                 <img
                   src={image}
                   alt={`${product.name} - ${index + 1}`}
-                  className="w-full h-16 object-cover"
+                  className="w-full h-12 object-cover"
                 />
               </div>
             ))}
