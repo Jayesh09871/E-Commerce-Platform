@@ -130,8 +130,47 @@ exports.logout = async (req, res) => {
 // @route   GET /api/auth/google/callback
 // @access  Public
 exports.googleCallback = (req, res) => {
-  // Successful authentication, redirect or respond with token
-  sendTokenResponse(req.user, 200, res);
+  try {
+    // Check if user exists
+    if (!req.user) {
+      console.error('No user found in request');
+      return res.status(400).send('Authentication failed - No user found');
+    }
+    
+    // Create token
+    const token = req.user.getSignedJwtToken();
+    console.log('Generated token for user:', req.user.email);
+    
+    // Create redirect URL
+    const redirectUrl = `${process.env.FRONTEND_URL}/auth-callback?token=${token}`;
+    console.log('Redirecting to:', redirectUrl);
+    
+    // Use a more reliable redirect with HTML to prevent WebSocket issues
+    res.send(`
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <title>Authentication Successful</title>
+          <script>
+            // Store the token in sessionStorage temporarily
+            sessionStorage.setItem('temp_auth_token', '${token}');
+            
+            // Redirect after a short delay
+            setTimeout(function() {
+              window.location.href = '${process.env.FRONTEND_URL}/auth-callback?token=${token}';
+            }, 500);
+          </script>
+        </head>
+        <body>
+          <h2>Authentication successful!</h2>
+          <p>You will be redirected to the application in a moment...</p>
+        </body>
+      </html>
+    `);
+  } catch (error) {
+    console.error('Google callback error:', error);
+    res.status(500).send('Authentication error: ' + error.message);
+  }
 };
 
 // Helper function to get token from model, create cookie and send response

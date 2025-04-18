@@ -16,6 +16,7 @@ import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
 import ProfilePage from './pages/ProfilePage'
 import NotFoundPage from './pages/NotFoundPage'
+import AuthCallbackPage from './pages/AuthCallbackPage'
 
 // Auth
 import PrivateRoute from './components/auth/PrivateRoute'
@@ -42,6 +43,7 @@ export default function App() {
           <Route path="/cart" element={<CartPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/auth-callback" element={<AuthCallbackPage />} />
           
           {/* Protected Routes */}
           <Route path="/checkout" element={
