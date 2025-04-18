@@ -54,7 +54,7 @@ const RegisterPage = () => {
 
   const handleGoogleLogin = () => {
     // Redirect to Google OAuth endpoint
-    window.location.href = 'http://localhost:5000/api/auth/google';
+    window.location.href = 'https://e-commerce-platform-n32w.onrender.com/api/auth/google';
   };
 
   return (

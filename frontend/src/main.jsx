@@ -10,7 +10,7 @@ import { store } from './store'
 import axios from 'axios'
 
 // Set base URL for axios
-axios.defaults.baseURL = 'http://localhost:5000';
+axios.defaults.baseURL = 'https://e-commerce-platform-n32w.onrender.com';
 
 // Add request interceptor to include auth token in all requests
 axios.interceptors.request.use(
