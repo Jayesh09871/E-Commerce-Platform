@@ -109,8 +109,12 @@ exports.createOrder = async (req, res) => {
 exports.getOrderById = async (req, res) => {
   try {
     const order = await Order.findById(req.params.id)
-      .populate('user', 'name email')
-      .populate('rider', 'name email phone');
+      .populate('user', 'name email phone')
+      .populate('rider', 'name email phone')
+      .populate({
+        path: 'items.product',
+        select: 'name price image description'
+      });
 
     if (!order) {
       return res.status(404).json({

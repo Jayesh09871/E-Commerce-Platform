@@ -13,6 +13,7 @@ router.use(authorize('rider'));
 
 // Rider routes
 router.get('/orders', getRiderOrders);
+router.get('/orders/:id', require('../controllers/order.controller').getOrderById);
 router.put('/orders/:id/status', updateOrderStatus);
 
 module.exports = router;
