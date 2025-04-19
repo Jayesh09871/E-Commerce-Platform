@@ -15,7 +15,7 @@ export const login = createAsyncThunk(
   async ({ email, password }, { rejectWithValue }) => {
     try {
       // Direct API call without additional configuration
-      const response = await axiosInstance.post('/api/auth/login', { 
+      const response = await axiosInstance.post('auth/login', { 
         email, 
         password 
       });

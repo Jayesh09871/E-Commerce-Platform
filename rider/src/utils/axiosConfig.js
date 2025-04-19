@@ -1,8 +1,10 @@
 import axios from 'axios';
 
+const API_BASE_URL = import.meta.env.VITE_API_URL || '';
+
 // Create axios instance with base URL
 const axiosInstance = axios.create({
-  baseURL: '',
+  baseURL: API_BASE_URL,
   timeout: 10000,
 });
 
@@ -14,7 +16,7 @@ axiosInstance.interceptors.request.use(
       config.headers['Authorization'] = `Bearer ${token}`;
     }
     // Ensure Content-Type is set for all requests
-    if (!config.headers['Content-Type'] && !config.headers.get('Content-Type')) {
+    if (!config.headers['Content-Type'] && !(config.headers.get && config.headers.get('Content-Type'))) {
       config.headers['Content-Type'] = 'application/json';
     }
     return config;

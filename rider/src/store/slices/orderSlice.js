@@ -15,7 +15,7 @@ export const getAssignedOrders = createAsyncThunk(
   async (_, { getState, rejectWithValue }) => {
     try {
       // We don't need to pass the token in config as it's handled by axiosInstance interceptor
-      const { data } = await axiosInstance.get('/api/rider/orders');
+      const { data } = await axiosInstance.get('rider/orders');
       
       // Ensure we return an array even if the API doesn't return data
       return data && data.data ? data.data : [];
@@ -36,7 +36,7 @@ export const getOrderDetails = createAsyncThunk(
   async (id, { getState, rejectWithValue }) => {
     try {
       // Token is handled by axiosInstance interceptor
-      const { data } = await axiosInstance.get(`/api/rider/orders/${id}`);
+      const { data } = await axiosInstance.get(`rider/orders/${id}`);
       return data.data;
     } catch (error) {
       console.error(`Error fetching order ${id}:`, error);
@@ -56,7 +56,7 @@ export const updateOrderStatus = createAsyncThunk(
     try {
       // Token and Content-Type are handled by axiosInstance interceptor
       const { data } = await axiosInstance.put(
-        `/api/rider/orders/${id}/status`,
+        `rider/orders/${id}/status`,
         { status, notes }
       );
       
