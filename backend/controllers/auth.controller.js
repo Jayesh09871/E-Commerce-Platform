@@ -9,15 +9,6 @@ exports.register = async (req, res) => {
   try {
     const { name, email, password, phone } = req.body;
 
-    // Check if email is approved
-    const approvedEmail = await ApprovedEmail.findOne({ email });
-    if (!approvedEmail) {
-      return res.status(401).json({
-        success: false,
-        message: 'Email not approved for registration',
-      });
-    }
-
     // Check if user already exists
     let user = await User.findOne({ email });
     if (user) {
@@ -33,7 +24,7 @@ exports.register = async (req, res) => {
       email,
       password,
       phone,
-      role: approvedEmail.role || 'user',
+      role: 'user', // Default to 'user' role
     });
 
     sendTokenResponse(user, 201, res);
